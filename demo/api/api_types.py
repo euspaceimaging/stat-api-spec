@@ -16,8 +16,39 @@ from geojson_pydantic.geometries import (
 
 from datetime import datetime as pydatetime
 
+Geometry = Union[
+    Point,
+    MultiPoint,
+    LineString,
+    MultiLineString,
+    Polygon,
+    MultiPolygon,
+    GeometryCollection,
+]
+
+class OpportunityProperties(BaseModel):
+    """
+    https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/common-metadata.md#date-and-time-range
+    """
+
+    title: Optional[str] = Field(None, alias="title")
+    description: Optional[str] = Field(None, alias="description")
+    start_datetime: Optional[datetime] = Field(None, alias="start_datetime")
+    end_datetime: Optional[datetime] = Field(None, alias="end_datetime")
+    created: Optional[datetime] = Field(None, alias="created")
+    updated: Optional[datetime] = Field(None, alias="updated")
+    platform: Optional[str] = Field(None, alias="platform")
+    instruments: Optional[List[str]] = Field(None, alias="instruments")
+    constellation: Optional[str] = Field(None, alias="constellation")
+    mission: Optional[str] = Field(None, alias="mission")
+    providers: Optional[List[Provider]] = Field(None, alias="providers")
+    gsd: Optional[confloat(gt=0)] = Field(None, alias="gsd")
+
+    class Config:
+        json_encoders = {datetime: lambda v: v.strftime(DATETIME_RFC339)}
+
 # Copied and modified from stack_pydantic.item.Item
-class Item(Feature[Any, ItemProperties]):
+class Item(Feature[Geometry, OpportunityProperties]):
 
     id: constr(min_length=1)  # type: ignore
 
