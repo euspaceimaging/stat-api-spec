@@ -20,7 +20,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-        working-directory: ./
 
       - name: Run remark linter
         run: npm run check-markdown
