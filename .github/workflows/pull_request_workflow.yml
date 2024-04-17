@@ -1,4 +1,4 @@
-name: reviewdog
+name: pull_request_workflow
 on: [pull_request]
 jobs:
   build:
