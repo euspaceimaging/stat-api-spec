@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run remark linter
+        run: npm run check-markdown
+
+      - name: Run remark-lint with reviewdog
+        # You may pin to the exact commit or the version.
+        # uses: reviewdog/action-remark-lint@55ec26a9926db70370e9627912fee327b44ddef6
+        uses: reviewdog/action-remark-lint@v5.8.3
+          
