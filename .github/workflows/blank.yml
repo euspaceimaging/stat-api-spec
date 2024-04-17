@@ -21,6 +21,9 @@ jobs:
       - name: Install Dependencies
         run: npm install -g npm
 
+      - name: Install Dependencies
+        run: npm install
+
       - name: Run remark linter
         run: npm run check-markdown
 
