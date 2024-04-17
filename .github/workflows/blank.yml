@@ -19,7 +19,7 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --no-optional
 
       - name: Run remark linter
         run: npm run check-markdown
